@@ -1,0 +1,14 @@
+# GflowMeter Parameters
+capture_interval: 1           # traffic capture interval in seconds
+sample_type: 'bidirectional'      # bidirectional or unidirectional (flows)
+target_sample_length: 1024        # how many bytes to keep per flow
+padding_per_packet: False         # Instead of appending packets to a flow until they reach the target sample length, you pad each packet uniformly and continue appending them until the total reaches the target sample length.
+
+# Capture Parameters
+interfaces: 
+  - 'Ethernet'
+
+
+# Model Parameters
+batch_size: 32    #process flows through batches to reduce overhead
+detection_threshold: 0.1 #adjust to make the model more or less sensitive. 0 > detection_threshold >= 1. Lower values --> Higher Sensitivity to detection

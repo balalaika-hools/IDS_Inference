@@ -1,0 +1,19 @@
+Flow Total Packets
+Flow Total Bytes 
+Flow Packet Bytes Min
+Flow Packet Bytes Max
+Flow Packet Bytes Avg
+Flow Packet Bytes Variance
+Flow Payload Bytes Min 
+Flow Payload Bytes Max
+Flow Payload Bytes Avg
+Flow Payload Bytes Variance
+Flow Header Bytes
+Flow Duration
+Flow Bytes/s           
+Flow Packets/s
+Flow IAT Total
+Flow IAT Min   
+Flow IAT Max                    
+Flow IAT Avg                          
+Flow IAT Variance

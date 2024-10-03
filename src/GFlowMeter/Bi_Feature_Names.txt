@@ -1,0 +1,57 @@
+Flow Total Packets
+Fwd Total Packets
+Bwd Total Packets
+Flow Total Bytes 
+Fwd Total Bytes
+Bwd Total Bytes
+Flow Packet Bytes Min
+Flow Packet Bytes Max
+Flow Packet Bytes Avg
+Flow Packet Bytes Variance
+Fwd Packet Bytes Min       
+Fwd Packet Bytes Max       
+Fwd Packet Bytes Avg        
+Fwd Packet Bytes Variance     
+Bwd Packet Bytes Min      
+Bwd Packet Bytes Max       
+Bwd Packet Bytes Avg      
+Bwd Packet Bytes Variance
+Flow Payload Bytes Min 
+Flow Payload Bytes Max
+Flow Payload Bytes Avg
+Flow Payload Bytes Variance
+Fwd Payload Bytes Min 
+Fwd Payload Bytes Max
+Fwd Payload Bytes Avg
+Fwd Payload Bytes Variance
+Bwd Payload Bytes Min 
+Bwd Payload Bytes Max
+Bwd Payload Bytes Avg
+Bwd Payload Bytes Variance
+Flow Header Bytes
+Fwd Header Bytes
+Bwd Header Bytes
+Flow Duration
+Fwd Duration
+Bwd Duration
+Flow Bytes/s
+Fwd Bytes/s
+Bwd Bytes/s            
+Flow Packets/s
+Fwd Packets/s           
+Bwd Packets/s
+Flow IAT Total
+Flow IAT Min   
+Flow IAT Max                    
+Flow IAT Avg                          
+Flow IAT Variance
+Fwd IAT Total 
+Fwd IAT Min         
+Fwd IAT Max         
+Fwd IAT Avg            
+Fwd IAT Variance
+Bwd IAT Total
+Bwd IAT Min         
+Bwd IAT Max         
+Bwd IAT Avg            
+Bwd IAT Variance
