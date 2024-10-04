@@ -156,7 +156,7 @@ You should see an entry for `ids_inference` in the list of Docker images.
 sudo python app.py
 ```
 
-This will start the FastAPI application on `http://0.0.0.0:8000`.
+This will start the FastAPI application, listening on all network interfaces (0.0.0.0:8000).
 
 #### Step 2: Access the API Documentation (Optional)
 
