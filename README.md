@@ -4,7 +4,6 @@
 
 IDS_Inference is a real-time Intrusion Detection System (IDS) designed to monitor network traffic and detect malicious activities using a pre-trained deep learning model. The system captures live network packets, processes them to extract relevant features, and then performs inference using a fusion model to determine if any intrusion has occurred. The application exposes a RESTful API built with FastAPI, allowing users to trigger detection and receive results in JSON format.
 
-
 ## Features
 
 - **Real-Time Packet Capturing**: Uses Scapy to capture live network traffic.
@@ -26,6 +25,7 @@ IDS_Inference is a real-time Intrusion Detection System (IDS) designed to monito
   - [Testing Locally](#testing-locally)
   - [Testing with Docker](#testing-with-docker)
 - [Configuration](#configuration)
+- [API Response Format](#api-response-format)
 - [Project Structure](#project-structure)
 
 
@@ -163,7 +163,7 @@ This will start the FastAPI application on `http://0.0.0.0:8000`.
 Open a web browser and navigate to:
 
 ```
-http://0.0.0.0:8000/docs
+http://localhost:8000/docs
 ```
 
 This will display the automatically generated API documentation provided by FastAPI.
@@ -173,7 +173,7 @@ This will display the automatically generated API documentation provided by Fast
 Use `curl` or any HTTP client to send a POST request to the `/detect` endpoint:
 
 ```bash
-curl -X POST http://0.0.0.0:8000/detect
+curl -X POST http://localhost:8000/detect
 ```
 
 You should receive a JSON response indicating whether an intrusion was detected.
@@ -200,13 +200,13 @@ docker run --rm -it \
 Since the container shares the host's network, the API is accessible at:
 
 ```
-http://0.0.0.0:8000
+http://localhost:8000
 ```
 
 #### Step 3: Trigger Detection
 
 ```bash
-curl -X POST http://0.0.0.0:8000/detect
+curl -X POST http://localhost:8000/detect
 ```
 
 ## Testing
@@ -220,13 +220,14 @@ To test the IDS, you can generate various types of network traffic:
 - **Normal Traffic**: Browse the internet, stream videos, or perform regular network activities.
 - **Malicious Traffic**: Use tools like `nmap`, `hping3`, or custom scripts to simulate attacks.
 
+**Note**: Only generate malicious traffic in a controlled environment where you have permission to do so.
 
 #### Check Detection Results
 
 After generating traffic, send a POST request to the `/detect` endpoint:
 
 ```bash
-curl -X POST http://0.0.0.0:8000/detect
+curl -X POST http://localhost:8000/detect
 ```
 
 Review the JSON response to see if any intrusions were detected.
@@ -271,6 +272,79 @@ interfaces:
   - 'eth0'    # Replace 'eth0' with your desired interface name
 ```
 
+## API Response Format
+
+When you trigger detection by sending a POST request to the `/detect` endpoint, the API responds with a JSON object detailing the results of the intrusion detection process.
+
+### Example Response (No Malicious Content Detected)
+
+```json
+{
+    "Verdict": "No malicious content detected",
+    "Total Flows": 10,
+    "Execution Time (seconds)": 0.25
+}
+```
+
+### Example Response (Malicious Content Detected)
+
+```json
+{
+    "Verdict": "Attack Detected",
+    "Total Flows": 51,
+    "Attacks": [
+        {
+            "Attack Name": "Gorgo",
+            "Number of Flows": 51,
+            "Protocols": [
+                "TCP",
+                "UDP"
+            ],
+            "Source IPs": [
+                "192.168.1.2",
+                "192.168.1.3",
+                "..."
+            ],
+            "Destination IPs": [
+                "10.0.0.5",
+                "10.0.0.6",
+                "..."
+            ],
+            "Source Ports": [
+                "443",
+                "80",
+                "..."
+            ],
+            "Destination Ports": [
+                "8080",
+                "22",
+                "..."
+            ]
+        }
+    ],
+    "Execution Time (seconds)": 0.31
+}
+```
+
+### Explanation of Response Fields
+
+- **`Verdict`**: Indicates whether an attack was detected. Possible values are `"No malicious content detected"`, `"Attack Detected"`, or `"Attacks Detected"` if multiple attack types are found.
+- **`Total Flows`**: The total number of network flows analyzed during the detection cycle.
+- **`Attacks`**: An array containing details about each detected attack. This field is included only if malicious content is detected.
+  - **`Attack Name`**: The classification of the detected attack.
+  - **`Number of Flows`**: How many flows were associated with this attack type.
+  - **`Protocols`**: Network protocols involved in the attack (e.g., TCP, UDP).
+  - **`Source IPs`**: List of source IP addresses from which the attack originated.
+  - **`Destination IPs`**: List of destination IP addresses targeted by the attack.
+  - **`Source Ports`**: List of source ports used in the attack traffic.
+  - **`Destination Ports`**: List of destination ports targeted in the attack traffic.
+- **`Execution Time (seconds)`**: Time taken to perform the detection process.
+
+### Notes
+
+- **Multiple Attack Classes**: If multiple types of attacks are detected during the analysis, each will be listed separately within the `"Attacks"` array.
+- **Data Representation**: IP addresses and ports are provided as strings. The `"..."` indicates that the list may contain more entries.
+
 ## Project Structure
 
 ```
@@ -300,9 +374,6 @@ IDS_Inference/
 - **`sniffer.py`**: Defines the packet sniffer that captures packets from specified interfaces.
 - **`fusion_model.py`**: Contains the PyTorch model class and prediction method.
 - **`GFlowMeter`**: Module responsible for extracting features from network flows.
-
-
-
-
----
+- **`prettyJson.py`**: Custom JSON response class for formatted output.
+- **`utils.py`**: Utility functions for processing predictions and configurations.
 
